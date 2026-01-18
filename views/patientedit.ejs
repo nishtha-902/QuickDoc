@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta -->
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV === 'production') { %>
+    <link rel="stylesheet" href="/assets/production/css/loginRegister.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="/assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="/assets/lib/css/style.css">
+    <link rel="stylesheet" href="/assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+  <% } %>
+
+  <style>
+    body {
+      background-color: #f2f7fc;
+    }
+
+    .contact-area {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    .update-card {
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .update-card:hover {
+      box-shadow: 0 12px 35px rgba(0, 123, 255, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .update-card h2 {
+      color: #007bff;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-group p,
+    .form-group label {
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      border: 1px solid #007bff;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    button.btn-submit {
+      background-color: #007bff;
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    button.btn-submit:hover {
+      background-color: #0056b3;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .update-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body onload="typeWriter()">
+
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <div class="contact-area">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <div class="update-card">
+            <h2>Update Patient Profile</h2>
+
+            <form action="/patienthome/<%= data.user._id %>/edit?_method=put" method="POST" accept-charset="utf-8">
+
+              <div class="form-group">
+                <p>Name</p>
+                <input type="text" class="form-control" name="name" placeholder="Full Name" required
+                  value="<%= data.patient.name %>">
+              </div>
+
+              <div class="form-group">
+                <p>Date of Birth</p>
+                <input type="text" class="form-control" name="dob" placeholder="MM/DD/YYYY"
+                  onfocus="(this.type='date')" onblur="(this.type='text')" required value="<%= data.patient.dob %>">
+              </div>
+
+              <div class="form-group">
+                <p>Address</p>
+                <textarea class="form-control" name="address" placeholder="Enter full address" required
+                  rows="3"><%= data.patient.address %></textarea>
+              </div>
+
+              <div class="form-group">
+                <p>Phone Number</p>
+                <input type="tel" class="form-control" name="phone" placeholder="10-digit phone number" pattern="^\d{10}$"
+                  minlength="10" required value="<%= data.patient.phone %>">
+              </div>
+
+              <div class="form-group">
+                <p>Email Address</p>
+                <input type="email" class="form-control" name="username" placeholder="Email" required
+                  value="<%= data.patient.username %>">
+              </div>
+
+              <div class="form-group mt-4">
+                <button type="submit" class="btn-submit">Update Profile</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <!-- Typewriter -->
+  <script>
+    let i = 0;
+    const txt = "WELCOME TO MEDBUDDY";
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, 60);
+      }
+    }
+  </script>
+
+  <!-- JS Libraries -->
+  <script defer src="/assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="/assets/lib/js/popper.min.js"></script>
+  <script defer src="/assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="/assets/lib/js/all.min.js"></script>
+  <script defer src="/assets/lib/js/select2.full.min.js"></script>
+
+</body>
+
+</html>

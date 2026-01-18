@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta Data -->
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV == 'production') { %>
+    <link rel="stylesheet" href="assets/production/css/about.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="assets/lib/css/style.css">
+    <link rel="stylesheet" href="assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+  <% } %>
+
+  <style>
+    /* FAQ Section */
+    .faq-area {
+      padding: 60px 0;
+      background: #f8faff;
+    }
+
+    .faq-area h2 {
+      text-align: center;
+      color: #007bff;
+      font-weight: 700;
+      margin-bottom: 50px;
+    }
+
+    .faq-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 25px 30px;
+      margin-bottom: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .faq-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .faq-question {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .faq-question i {
+      margin-right: 10px;
+      color: #007bff;
+    }
+
+    .faq-answer {
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body onLoad="typeWriter()">
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <!-- FAQ Section -->
+  <div class="faq-area">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-card">
+        <div class="faq-question"><i class="fa fa-question-circle"></i> How do I book an appointment?</div>
+        <p class="faq-answer">You can book an appointment by registering as a patient, selecting a doctor, and choosing your preferred date and time. Confirmation will be sent instantly.</p>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question"><i class="fa fa-question-circle"></i> Can I consult multiple doctors online?</div>
+        <p class="faq-answer">Yes, you can schedule multiple consultations with different doctors. Each session is separate to ensure focused attention.</p>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question"><i class="fa fa-question-circle"></i> Are the doctors verified?</div>
+        <p class="faq-answer">Absolutely. All doctors are thoroughly verified through credential checks before being allowed to consult on QuickDoc.</p>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question"><i class="fa fa-question-circle"></i> Is my personal data safe?</div>
+        <p class="faq-answer">Yes. All patient and doctor data is encrypted and stored securely in compliance with healthcare data privacy standards.</p>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question"><i class="fa fa-question-circle"></i> What services are offered?</div>
+        <p class="faq-answer">Services include online consultations, appointment booking, ambulance support, emergency alerts, and access to test results and reports online.</p>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question"><i class="fa fa-question-circle"></i> Can I access QuickDoc on mobile?</div>
+        <p class="faq-answer">Yes, QuickDoc is fully mobile-friendly. You can book appointments, consult doctors, and view reports on any smartphone or tablet.</p>
+      </div>
+
+    </div>
+  </div>
+  <!-- FAQ End -->
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <script>
+    var i = 0;
+    var txt = 'WELCOME TO MEDBUDDY';
+    var speed = 60;
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+
+  <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="assets/lib/js/popper.min.js"></script>
+  <script defer src="assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="assets/lib/js/all.min.js"></script>
+  <script defer src="assets/lib/js/select2.full.min.js"></script>
+  <script defer src="assets/js/about.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partial/title.ejs'); %>
+
+  <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      background: #f4f7fb;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #e9f2ff;
+      border-right: 1px solid #dbe7ff;
+      padding: 20px;
+      min-height: 100%;
+    }
+
+    .sidebar h4 {
+      text-align: center;
+      color: #0d6efd;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      color: #0d6efd;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      background: #d6e6ff;
+    }
+
+    /* Main content */
+    .main-content {
+      padding: 30px;
+    }
+
+    /* Cards */
+    .card-ui {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .card-ui h5 {
+      font-size: 14px;
+      color: #6c757d;
+    }
+
+    .card-ui h2 {
+      color: #0d6efd;
+      font-weight: 700;
+    }
+
+    /* Progress */
+    .progress {
+      height: 8px;
+      border-radius: 10px;
+    }
+
+    /* Booking cards */
+    .booking-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <!-- Layout -->
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 p-0">
+        <div class="sidebar">
+          <h4>🚑 QuickDoc</h4>
+          <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
+          <a href="#current"><i class="fa fa-ambulance"></i> Active Bookings</a>
+          <a href="#past"><i class="fa fa-history"></i> Completed Trips</a>
+          <a href="/ambulancehome/<%= data.user._id %>/edit">
+            <i class="fa fa-user"></i> Profile Settings
+          </a>
+          <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9 col-lg-10">
+        <div class="main-content">
+
+          <h3 class="mb-4">Welcome, <b><%= data.user.name %></b></h3>
+
+          <!-- Stats -->
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card-ui">
+                <h5>Total Bookings</h5>
+                <h2><%= data.futurebooking.length + data.pastbooking.length %></h2>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-ui">
+                <h5>Active</h5>
+                <h2><%= data.futurebooking.length %></h2>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-ui">
+                <h5>Completed</h5>
+                <h2><%= data.pastbooking.length %></h2>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-ui">
+                <h5>Ambulance Status</h5>
+                <h2>Online</h2>
+              </div>
+            </div>
+          </div>
+
+          <!-- Overview -->
+          <div class="row mt-4">
+            <div class="col-md-7">
+              <div class="card-ui">
+                <h5>Bookings Overview</h5>
+                <canvas id="barChart"></canvas>
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="card-ui">
+                <h5>System Activity</h5>
+                <p>✔ Ambulance available</p>
+                <p>✔ Driver verified</p>
+                <p>✔ GPS tracking enabled</p>
+
+                <h6 class="mt-3">Completion Rate</h6>
+                <div class="progress">
+                  <div class="progress-bar bg-primary"
+                    style="width:<% (data.pastbooking.length / (data.futurebooking.length + data.pastbooking.length || 1)) * 100 %>%">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Bookings -->
+          <h4 id="current" class="mt-5">🚨 Active Bookings</h4>
+
+          <% if (data.futurebooking.length > 0) { %>
+            <% data.futurebooking.forEach(function(item){ %>
+              <div class="booking-card">
+                <b>Patient:</b> <%= item.PatientName %><br>
+                <b>Phone:</b> <%= item.PatientPhone %><br>
+                <b>Address:</b> <%= item.PatientAddress %><br>
+                <b>Status:</b> <%= item.BookingStatus %><br>
+                <b>Date:</b> <%= item.Date %> | <%= item.Time %><br><br>
+
+                <% if(item.BookingStatus === "Yet to be confirmed") { %>
+                  <a class="btn btn-success btn-sm"
+                    href="/ambulancehome/<%= data.user._id %>/<%= item.BookingId %>/accept">
+                    Confirm
+                  </a>
+                <% } else if(item.JourneyStatus === "Started") { %>
+                  <a class="btn btn-danger btn-sm"
+                    href="/ambulancehome/<%= data.user._id %>/<%= item.BookingId %>/endjourney">
+                    End Journey
+                  </a>
+                <% } else if(item.BookingStatus === "Accepted") { %>
+                  <a class="btn btn-info btn-sm"
+                    href="/ambulancehome/<%= data.user._id %>/<%= item.BookingId %>/startjourney">
+                    Start Journey
+                  </a>
+                <% } %>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <p>No active bookings.</p>
+          <% } %>
+
+          <!-- Past Bookings -->
+          <h4 id="past" class="mt-5">📜 Completed Trips</h4>
+
+          <% if (data.pastbooking.length > 0) { %>
+            <% data.pastbooking.forEach(function(item){ %>
+              <div class="booking-card">
+                <b>Patient:</b> <%= item.PatientName %><br>
+                <b>Date:</b> <%= item.Date %> | <%= item.Time %>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <p>No completed bookings.</p>
+          <% } %>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <!-- Chart -->
+  <script>
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Total', 'Active', 'Completed'],
+        datasets: [{
+          label: 'Bookings',
+          data: [
+            "<%= data.futurebooking.length + data.pastbooking.length %>",
+            "<%= data.futurebooking.length %>",
+            "<%= data.pastbooking.length %>"
+          ],
+          backgroundColor: '#0d6efd'
+        }]
+      }
+    });
+  </script>
+
+</body>
+</html>

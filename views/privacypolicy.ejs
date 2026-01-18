@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta Data -->
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV == 'production') { %>
+    <link rel="stylesheet" href="assets/production/css/about.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="assets/lib/css/style.css">
+    <link rel="stylesheet" href="assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+  <% } %>
+
+  <style>
+    .about-page {
+      padding: 60px 0;
+      background: #f5f8ff;
+    }
+
+    .about-page h2 {
+      font-weight: 800;
+      color: #007bff;
+      margin-bottom: 40px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .about-page h2::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: #007bff;
+      margin: 10px auto 0 auto;
+      border-radius: 2px;
+    }
+
+    .term-heading {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #004085;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    .term-heading::before {
+      content: "\f06e"; /* FontAwesome icon for lock/privacy */
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #007bff;
+    }
+
+    .about-page p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #495057;
+      margin-bottom: 15px;
+    }
+
+    .about-page ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    .about-page ul li {
+      margin-bottom: 10px;
+      color: #495057;
+    }
+  </style>
+</head>
+
+<body onLoad="typeWriter()">
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <!-- Privacy Policy Start -->
+  <div class="about-page pt_60 pb_30">
+    <div class="container">
+      <h2>Privacy Policy</h2>
+      <div class="row">
+        <div class="col-md-12">
+          <p>Your privacy is critically important to us at QuickDoc. We are committed to protecting your personal
+            information and ensuring transparency about how your data is used and stored.</p>
+
+          <h3 class="term-heading">1. Information We Collect</h3>
+          <p>We collect personal information such as your name, contact details, medical history, and appointment
+            records. Non-personal data, like usage analytics, is also collected to improve our services.</p>
+
+          <h3 class="term-heading">2. Use of Information</h3>
+          <ul>
+            <li>To provide and improve healthcare services.</li>
+            <li>To communicate important updates and reminders.</li>
+            <li>To comply with legal and regulatory obligations.</li>
+          </ul>
+
+          <h3 class="term-heading">3. Sharing of Information</h3>
+          <p>We do not sell or rent your personal data. Information may be shared with doctors, healthcare providers,
+            or emergency services as necessary to provide the requested services.</p>
+
+          <h3 class="term-heading">4. Data Security</h3>
+          <p>We implement industry-standard security measures to protect your data from unauthorized access, alteration,
+            or disclosure. Access to sensitive information is restricted to authorized personnel only.</p>
+
+          <h3 class="term-heading">5. Cookies & Tracking</h3>
+          <p>Our website uses cookies to enhance user experience, track session data, and improve platform performance.
+            Users can manage cookie preferences through their browser settings.</p>
+
+          <h3 class="term-heading">6. User Rights</h3>
+          <ul>
+            <li>Right to access personal data collected.</li>
+            <li>Right to correct or update inaccurate information.</li>
+            <li>Right to request deletion of personal data where applicable.</li>
+          </ul>
+
+          <h3 class="term-heading">7. Third-Party Services</h3>
+          <p>We may use third-party services (e.g., analytics, payment processors). These services have their own
+            privacy policies, and we ensure data sharing is secure and compliant.</p>
+
+          <h3 class="term-heading">8. Changes to Privacy Policy</h3>
+          <p>We may update this policy periodically. Continued use of the QuickDoc platform constitutes acceptance of
+            the updated policy. Users are encouraged to review the policy regularly.</p>
+
+          <h3 class="term-heading">9. Contact Us</h3>
+          <p>If you have any questions regarding this Privacy Policy or your data, you can contact our support team at
+            privacy@medbuddy.com or call us at +91-XXXXXXXXXX.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Privacy Policy End -->
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <script>
+    var i = 0;
+    var txt = 'WELCOME TO MEDBUDDY';
+    var speed = 60;
+
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+
+  <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="assets/lib/js/popper.min.js"></script>
+  <script defer src="assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="assets/lib/js/all.min.js"></script>
+  <script defer src="assets/lib/js/select2.full.min.js"></script>
+  <script defer src="assets/js/about.js"></script>
+</body>
+
+</html>

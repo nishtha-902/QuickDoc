@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partial/title.ejs'); %>
+
+  <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+
+  <style>
+    body {
+      background: #f4f7fb;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .booking-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .booking-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 40px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .booking-card h3 {
+      color: #2a5298;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .booking-card p {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .form-select {
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      border: none;
+      border-radius: 25px;
+      padding: 10px 35px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .step-badge {
+      background: #eaf0ff;
+      color: #2a5298;
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body onLoad="typeWriter()">
+
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <!-- Booking Section -->
+  <div class="booking-wrapper">
+    <div class="booking-card">
+
+      <span class="step-badge">Step 1 of 4</span>
+      <h3>Book an Appointment</h3>
+      <p>Select the type of specialist you want to consult</p>
+
+      <form action="/patienthome/bookappointment/<%= data.patientid %>" method="POST">
+
+        <div class="mb-4">
+          <select class="form-select" name="disease" required>
+            <option value="" disabled selected>Select Specialist</option>
+            <option value="Ent">👂 ENT Specialist</option>
+            <option value="Skin">🧴 Skin Specialist</option>
+            <option value="Dentist">🦷 Dentist</option>
+            <option value="Heart">❤️ Heart Specialist</option>
+            <option value="Lung">🫁 Lung Specialist</option>
+            <option value="Neuro">🧠 Neuro Specialist</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Next →
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <script>
+    var i = 0;
+    var txt = 'WELCOME TO MEDBUDDY';
+    var speed = 60;
+
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+
+  <script defer src="/assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="/assets/lib/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

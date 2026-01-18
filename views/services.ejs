@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta Data -->
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV == 'production') { %>
+    <link rel="stylesheet" href="assets/production/css/services.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="assets/lib/css/style.css">
+    <link rel="stylesheet" href="assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+  <% } %>
+
+  <style>
+    .service-page {
+      padding: 60px 0;
+      background: #f8faff;
+    }
+
+    .services-item {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .services-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .services-photo {
+      width: 100%;
+      height: 220px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .services-text {
+      padding: 20px;
+    }
+
+    /* Service title hover effect */
+    .services-text h3 a {
+      color: #333;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .services-text h3 a:hover {
+      color: #007bff; /* Blue on hover */
+    }
+
+    .services-text p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+
+    /* Simplified "Read More" button */
+    .button-bn a {
+      display: inline-block;
+      font-weight: 500;
+      text-decoration: none;
+      color: #007bff;
+      transition: color 0.3s;
+    }
+
+    .button-bn a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body onLoad="typeWriter()">
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <!-- Services Area Start -->
+  <div class="service-page">
+    <div class="container">
+      <div class="row">
+        <!-- Service 1 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="services-item">
+            <a href="/about" class="image-effect">
+              <div class="services-photo" style="background-image: url(assets/images/newborn.JPEG)"></div>
+            </a>
+            <div class="services-text">
+              <h3><a href="/about">Newborn Care</a></h3>
+              <p>Comprehensive newborn care services including routine check-ups, vaccinations, and guidance for new parents to ensure your baby’s healthy start.</p>
+              <div class="button-bn">
+                <a href="/about">Read More <i class="fa fa-chevron-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="services-item">
+            <a href="/about" class="image-effect">
+              <div class="services-photo" style="background-image: url(assets/images/mothercare.JPEG)"></div>
+            </a>
+            <div class="services-text">
+              <h3><a href="/about">Mother Care</a></h3>
+              <p>Holistic care for expecting and new mothers, including prenatal, postnatal checkups, nutrition advice, and mental health support.</p>
+              <div class="button-bn">
+                <a href="/about">Read More <i class="fa fa-chevron-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="services-item">
+            <a href="/about" class="image-effect">
+              <div class="services-photo" style="background-image: url(assets/images/criticaltreatement.JPEG)"></div>
+            </a>
+            <div class="services-text">
+              <h3><a href="/about">Critical Treatment</a></h3>
+              <p>Specialized care for critical patients with emergency response, ICU facilities, and expert physician attention around the clock.</p>
+              <div class="button-bn">
+                <a href="/about">Read More <i class="fa fa-chevron-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="services-item">
+            <a href="/about" class="image-effect">
+              <div class="services-photo" style="background-image: url(assets/images/lab.JPEG)"></div>
+            </a>
+            <div class="services-text">
+              <h3><a href="/about">Modern Laboratory</a></h3>
+              <p>Advanced diagnostic facilities with state-of-the-art equipment, accurate testing, and timely reporting to support medical decisions.</p>
+              <div class="button-bn">
+                <a href="/about">Read More <i class="fa fa-chevron-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="services-item">
+            <a href="/about" class="image-effect">
+              <div class="services-photo" style="background-image: url(assets/images/test.JPEG)"></div>
+            </a>
+            <div class="services-text">
+              <h3><a href="/about">All Major Tests</a></h3>
+              <p>Comprehensive range of medical tests including blood tests, imaging, and specialized diagnostics with fast and reliable results.</p>
+              <div class="button-bn">
+                <a href="/about">Read More <i class="fa fa-chevron-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="services-item">
+            <a href="/about" class="image-effect">
+              <div class="services-photo" style="background-image: url(assets/images/dental.JPEG)"></div>
+            </a>
+            <div class="services-text">
+              <h3><a href="/about">Dental Care</a></h3>
+              <p>Comprehensive dental services including routine checkups, cleanings, fillings, and cosmetic dentistry for a healthy smile.</p>
+              <div class="button-bn">
+                <a href="/about">Read More <i class="fa fa-chevron-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Services Area End -->
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <script>
+    var i = 0;
+    var txt = 'WELCOME TO MEDBUDDY';
+    var speed = 60;
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+
+  <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="assets/lib/js/popper.min.js"></script>
+  <script defer src="assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="assets/lib/js/all.min.js"></script>
+  <script defer src="assets/lib/js/select2.full.min.js"></script>
+  <script defer src="assets/js/about.js"></script>
+</body>
+
+</html>

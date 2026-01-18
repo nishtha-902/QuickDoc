@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partial/title.ejs'); %>
+
+  <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+
+  <style>
+    body {
+      background: #f4f7fb;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .doctor-wrapper {
+      padding: 60px 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-title h2 {
+      color: #2a5298;
+      font-weight: 600;
+    }
+
+    .step-badge {
+      background: #eaf0ff;
+      color: #2a5298;
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .doctor-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      height: 100%;
+      transition: transform 0.2s;
+    }
+
+    .doctor-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .doctor-card h5 {
+      color: #2a5298;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .doctor-info p {
+      margin-bottom: 8px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .doctor-info i {
+      color: #2a5298;
+      margin-right: 8px;
+    }
+
+    .btn-select {
+      margin-top: 15px;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      border: none;
+      border-radius: 25px;
+      padding: 8px 25px;
+      color: #fff;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .btn-select:hover {
+      opacity: 0.9;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body onLoad="typeWriter()">
+
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <div class="doctor-wrapper container">
+
+    <div class="page-title">
+      <span class="step-badge">Step 2 of 4</span>
+      <h2>Select a Doctor</h2>
+      <p class="text-muted">Choose a doctor available for your selected specialization</p>
+    </div>
+
+    <div class="row g-4">
+      <% data.doctor.forEach(function(item){ %>
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <h5>Dr. <%= item.name %></h5>
+
+            <div class="doctor-info">
+              <p><i class="fa fa-map-marker"></i><%= item.address %></p>
+              <p><i class="fa fa-phone"></i><%= item.phone %></p>
+            </div>
+
+            <a href="/patienthome/bookappointment/<%= data.patientid %>/<%= data.patientdisease %>/<%= item._id %>"
+               class="btn btn-select">
+              Select Doctor →
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <script>
+    var i = 0;
+    var txt = 'WELCOME TO MEDBUDDY';
+    var speed = 60;
+
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+
+  <script defer src="/assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="/assets/lib/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

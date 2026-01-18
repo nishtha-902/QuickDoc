@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <!--Meta Data-->
+    <%- include('partial/title.ejs'); %>  
+
+    <% if (data.NODE_ENV == 'production') { %>
+      <!-- Production Stylesheets -->
+      <link rel="stylesheet" href="assets/production/css/home.min.css">
+
+    <% }else { %>
+      <!-- Development Stylesheets -->
+      <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+      <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+      <link rel="stylesheet" href="assets/lib/css/responsive.css">
+      <link rel="stylesheet" href="assets/lib/css/select2.min.css">
+      <link rel="stylesheet" href="assets/lib/css/spacing.css">
+      <link rel="stylesheet" href="assets/lib/css/style.css">
+      <link rel="stylesheet" href="assets/lib/css/owl.carousel.min.css">
+      <link rel="stylesheet" href="assets/lib/css/owl.theme.default.min.css">
+      <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css">
+      <link rel="stylesheet" href="assets/lib/css/magnific-popup.css">
+      <link rel="stylesheet" href="assets/css/home.css">
+      <link rel="stylesheet" href="assets/css/header.css">
+      
+    <% } %>
+
+    <!-- Bootstrap & FontAwesome -->
+  <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+
+    <style>
+      /* ===== Professional Intro Section ===== */
+    .intro-section {
+      background: linear-gradient(135deg, #f4f8ff, #ffffff);
+      padding: 70px 0 60px;
+    }
+
+    .intro-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #0a2540;
+    }
+
+    .intro-subtitle {
+      font-size: 18px;
+      color: #5f6b7a;
+      margin-top: 15px;
+    }
+
+    /* ===== Trust Section ===== */
+.trust-section {
+  margin-top: 50px;
+}
+
+.trust-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 22px;
+  height: 100%;
+  box-shadow: 0 12px 30px rgba(13,110,253,0.12);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.trust-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(13,110,253,0.18);
+}
+
+.trust-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #e7f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.trust-icon i {
+  font-size: 22px;
+  color: #0d6efd;
+}
+
+.trust-card h6 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0a2540;
+  margin-bottom: 6px;
+}
+
+.trust-card p {
+  font-size: 14px;
+  color: #5f6b7a;
+  margin: 0;
+  line-height: 1.5;
+}
+/* ===== Highlight Card ===== */
+.highlight-card {
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border-radius: 20px;
+  padding: 30px 26px;
+  box-shadow: 0 18px 45px rgba(13,110,253,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight-card h5 {
+  font-weight: 800;
+  color: #0a2540;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.highlight-item i {
+  font-size: 20px;
+  color: #0d6efd;
+  margin-top: 3px;
+}
+
+.highlight-item h6 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  color: #0a2540;
+}
+
+.highlight-item p {
+  font-size: 14px;
+  color: #5f6b7a;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.highlight-footer {
+  margin-top: auto;
+}
+
+
+   
+    </style>
+  </head>
+
+  <body onLoad="typeWriter()">
+
+    <!--Header-->
+    <%- include('partial/header.ejs', {data: data }); %>
+
+   <!-- ===== PROFESSIONAL INTRO SECTION (NO SEARCH) ===== -->
+<section class="intro-section">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <!-- Left Content -->
+      <div class="col-lg-7">
+        <h1 class="intro-title">
+          Smart, Secure & Reliable Digital Healthcare
+        </h1>
+
+        <p class="intro-subtitle">
+          QuickDoc is a unified healthcare platform connecting patients, certified doctors,
+          and emergency services through a secure and efficient digital ecosystem.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-4">
+          <a href="/services" class="btn btn-primary btn-lg mr-3">
+            Explore Services
+          </a>
+          <a href="/about" class="btn btn-outline-primary btn-lg">
+            Learn More
+          </a>
+        </div>
+
+        <!-- Trust Indicators -->
+<div class="trust-section mt-5">
+  <div class="row">
+
+    <div class="col-md-4 mb-3">
+      <div class="trust-card">
+        <div class="trust-icon">
+          <i class="fa fa-shield"></i>
+        </div>
+        <h6>Secure Platform</h6>
+        <p>End-to-end data protection with role-based access control</p>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="trust-card">
+        <div class="trust-icon">
+          <i class="fa fa-user-md"></i>
+        </div>
+        <h6>Verified Doctors</h6>
+        <p>Only certified and background-verified medical professionals</p>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="trust-card">
+        <div class="trust-icon">
+          <i class="fa fa-ambulance"></i>
+        </div>
+        <h6>24×7 Emergency</h6>
+        <p>Instant access to emergency and ambulance services</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+      </div>
+
+      <!-- Right Highlights -->
+<div class="col-lg-5">
+  <div class="highlight-card h-100">
+    <h5 class="mb-3">Why QuickDoc?</h5>
+
+    <div class="highlight-item">
+      <i class="fa fa-users"></i>
+      <div>
+        <h6>Role-Based Access</h6>
+        <p>Dedicated portals for patients, doctors, and ambulance services</p>
+      </div>
+    </div>
+
+    <div class="highlight-item">
+      <i class="fa fa-calendar-check"></i>
+      <div>
+        <h6>Smart Appointments</h6>
+        <p>Streamlined scheduling, case tracking, and follow-ups</p>
+      </div>
+    </div>
+
+    <div class="highlight-item">
+      <i class="fa fa-ambulance"></i>
+      <div>
+        <h6>Emergency Ready</h6>
+        <p>Integrated ambulance dispatch and urgent care support</p>
+      </div>
+    </div>
+
+    <div class="highlight-item">
+      <i class="fa fa-lock"></i>
+      <div>
+        <h6>Privacy & Compliance</h6>
+        <p>Built with healthcare data protection and compliance in mind</p>
+      </div>
+    </div>
+
+    <div class="highlight-footer">
+      <a href="/about" class="btn btn-primary w-100">
+        Learn More About QuickDoc
+      </a>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+</section>
+
+
+
+   <!--About Start--> 
+<div class="about-area pt_60 pb_90" style="background-color: #f3f7fb;">
+  <div class="container">
+    <div class="row align-items-center">
+      
+      <!-- Left Content -->
+      <div class="col-lg-6 mt_30">
+        <div class="about-content">
+          <div class="headline-left">
+            <h2>
+              <span>QUALITY MEDICAL SERVICES</span> MAKE OUR PATIENTS HAPPY
+            </h2>
+          </div>
+          <p>
+            At QuickDoc, we provide high-quality medical care across multiple specialties. Our team of experts is dedicated to patient satisfaction, using advanced techniques and modern technology to ensure optimal health outcomes.
+          </p>
+        </div>
+      </div>
+      
+      <!-- Right Content: Bar Chart -->
+      <div class="col-lg-6 mt_30">
+        <div class="about-chart text-center">
+          <canvas id="departmentChart" height="300"></canvas>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!--About End-->
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('departmentChart').getContext('2d');
+  const departmentChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Neurology', 'Dentistry', 'Radiology', 'Cardiology'],
+      datasets: [{
+        label: 'Patient Satisfaction (%)',
+        data: [95, 80, 88, 82],
+        backgroundColor: '#007bff',
+        borderRadius: 5,
+        barPercentage: 0.6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { 
+          callbacks: {
+            label: function(context) {
+              return context.parsed.y + '%';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          ticks: { color: '#007bff', stepSize: 10 },
+          grid: { color: 'rgba(0,123,255,0.1)' }
+        },
+        x: {
+          ticks: { color: '#007bff' },
+          grid: { display: false }
+        }
+      }
+    }
+  });
+</script>
+
+<!-- Optional CSS Styling -->
+<style>
+.about-area h2 span {
+  color: #007bff;
+}
+
+.about-content p {
+  font-size: 1.05rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.about-chart {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+</style>
+
+
+    
+    <!-- TESTIMONIALS Start-->
+<section class="testimonials">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="customers-testimonials" class="owl-carousel">
+
+          <!--TESTIMONIAL 1 -->
+          <div class="item">
+            <div class="shadow-effect">
+              <img class="img-circle" src="assets/images/pat1.JPEG" alt="user1">
+              <p>"QuickDoc made booking appointments so easy and fast. The doctors were professional, and I felt confident in the care I received. Highly recommend this platform!"</p>
+            </div>
+            <div class="testimonial-name">EMILIANO AQUILANI</div>
+          </div>
+          <!--TESTIMONIAL 1 END-->
+
+          <!--TESTIMONIAL 2 -->
+          <div class="item">
+            <div class="shadow-effect">
+              <img class="img-circle" src="assets/images/pat2.JPEG" alt="user2">
+              <p>"The quick response from the staff was impressive. I had an emergency, and QuickDoc connected me to a doctor and ambulance immediately."</p>
+            </div>
+            <div class="testimonial-name">ANNA ITURBE</div>
+          </div>
+          <!--TESTIMONIAL 2 END-->
+
+          <!--TESTIMONIAL 3 -->
+          <div class="item">
+            <div class="shadow-effect">
+              <img class="img-circle" src="assets/images/pat3.JPEG" alt="user3">
+              <p>"I love the digital platform for managing appointments and test results. Everything is centralized, simple, and secure."</p>
+            </div>
+            <div class="testimonial-name">LARA ATKINSON</div>
+          </div>
+          <!--TESTIMONIAL 3 END-->
+
+          <!--TESTIMONIAL 4 -->
+          <div class="item">
+            <div class="shadow-effect">
+              <img class="img-circle" src="assets/images/doc1.JPEG" alt="user4">
+              <p>"As a doctor, QuickDoc makes patient management efficient and organized. I can track appointments, cases, and follow-ups seamlessly."</p>
+            </div>
+            <div class="testimonial-name">IAN OWEN</div>
+          </div>
+          <!--TESTIMONIAL 4 END-->
+
+          <!--TESTIMONIAL 5 -->
+          <div class="item">
+            <div class="shadow-effect">
+              <img class="img-circle" src="assets/images/doc2.JPEG" alt="user5">
+              <p>"The platform integrates modern technology to reduce administrative tasks. It's easy to use and allows me to focus on patient care."</p>
+            </div>
+            <div class="testimonial-name">MICHAEL TEDDY</div>
+          </div>
+          <!--TESTIMONIAL 5 END-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--TESTIMONIALS END-->
+
+
+    <!--Footer-->
+    <%- include('partial/footer.ejs'); %>
+    
+    <script>
+      var i = 0;
+      var txt = 'WELCOME TO MEDBUDDY';
+      var speed = 60;
+      function typeWriter() {
+        if (i < txt.length) {
+          document.getElementById("typeit").innerHTML += txt.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+        }
+      }
+    </script>
+
+    <!-- JavaScript -->
+    <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+    <script defer src="/assets/lib/js/popper.min.js"></script>
+    <script defer src="assets/lib/js/owl.carousel.min.js"></script>
+    <script defer src="assets/lib/js/bootstrap.bundle.js"></script>
+    <script defer src="assets/lib/js/all.min.js"></script>
+    <script defer src="assets/lib/js/select2.full.min.js"></script>
+    <script defer src="assets/js/home.js"></script>
+    
+  </body>
+</html>
+
+
+

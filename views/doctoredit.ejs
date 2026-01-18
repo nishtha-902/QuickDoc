@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Meta Data-->
+  <%- include('partial/title.ejs'); %> 
+
+  <% if (data.NODE_ENV === 'production') { %>
+    <!-- Production Stylesheets -->
+    <link rel="stylesheet" href="/assets/production/css/loginRegister.min.css">
+  <% } else { %>
+    <!-- Development Stylesheets -->
+    <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="/assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="/assets/lib/css/style.css">
+    <link rel="stylesheet" href="/assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="/assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+
+    <style>
+      body {
+        background-color: #f2f7fc;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .contact-area {
+        padding-top: 60px;
+        padding-bottom: 60px;
+      }
+
+      .update-card {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .update-card:hover {
+        box-shadow: 0 12px 35px rgba(0, 123, 255, 0.3);
+        transform: translateY(-5px);
+      }
+
+      .update-card h4,
+      .update-card h5 {
+        color: #007bff;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .nav-tabs .nav-link {
+        color: #007bff;
+        font-weight: 600;
+        border-radius: 10px;
+        margin-right: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .nav-tabs .nav-link.active {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      .form-group p,
+      .form-group label {
+        font-weight: 600;
+        color: #007bff;
+        margin-bottom: 8px;
+      }
+
+      .form-control {
+        border: 1px solid #007bff;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+
+      .btn-submit {
+        background-color: #007bff;
+        color: #fff;
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 10px;
+        border: none;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
+
+      .btn-submit:hover {
+        background-color: #0056b3;
+      }
+
+      @media (max-width: 768px) {
+        .col-6 {
+          width: 90%;
+          margin: auto;
+        }
+      }
+    </style>
+  <% } %>
+</head>
+
+<body onload="typeWriter()">
+  <!--Header-->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <div class="contact-area">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <div class="update-card">
+            <h5>Doctor Credentials Update</h5>
+
+            <form action="/doctorhome/<%= data.user._id %>/edit?_method=put" method="POST" accept-charset="utf-8">
+              <div class="form-row row mt-3">
+
+                <div class="form-group col-12">
+                  <p>Name</p>
+                  <input type="text" class="form-control" placeholder="Name" name="name" autocomplete="off"
+                    required value="<%= data.doctor.name %>">
+                </div>
+
+                <div class="form-group col-12">
+                  <p>Address</p>
+                  <textarea class="form-control" placeholder="Address" name="address" autocomplete="off"
+                    required><%= data.doctor.address %></textarea>
+                </div>
+
+                <div class="form-group col-12">
+                  <p>Phone Number</p>
+                  <input type="tel" class="form-control"
+                    placeholder="Phone Number (format:+91xxxxxxxxxx)" name="phone" pattern="^\d{10}$" minlength="10"
+                    autocomplete="off" required value="<%= data.doctor.phone %>">
+                </div>
+
+                <div class="form-group col-12">
+                  <p>Email Address</p>
+                  <input type="email" class="form-control" placeholder="Email Address" name="username"
+                    autocomplete="off" required value="<%= data.doctor.username %>">
+                </div>
+
+                <div class="form-group col-12">
+                  <button type="submit" class="btn-submit" name="form_registration">Update Profile</button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <%- include('partial/footer.ejs'); %>
+
+  <script>
+    var i = 0;
+    var txt = 'WELCOME TO MEDBUDDY';
+    var speed = 60;
+
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+
+  <!-- JavaScript -->
+  <script defer src="/assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="/assets/lib/js/popper.min.js"></script>
+  <script defer src="/assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="/assets/lib/js/all.min.js"></script>
+  <script defer src="/assets/lib/js/select2.full.min.js"></script>
+</body>
+</html>

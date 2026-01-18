@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV == 'production') { %>
+    <link rel="stylesheet" href="assets/production/css/loginRegister.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/lib/css/style.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f9ff;
+      }
+
+      .dashboard-wrapper {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+.sidebar {
+  width: 260px;
+  background: #f4f8ff;              /* light medical blue */
+  color: #1f3c88;
+  flex-shrink: 0;
+  padding: 40px 15px;
+  border-right: 1px solid #e1e9f6;
+}
+
+/* Sidebar title */
+.sidebar h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+  color: #1f3c88;
+}
+
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.sidebar a:hover {
+  background: #e6efff;
+  color: #1f3c88;
+}
+
+/* Optional active state */
+.sidebar a.active {
+  background: #dbe8ff;
+  color: #1f3c88;
+  font-weight: 600;
+}
+
+      /* Main content */
+      .main-content {
+        flex-grow: 1;
+        padding: 40px 30px;
+      }
+
+      .main-content h1 {
+        color: #007bff;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .card h5 {
+        color: #007bff;
+        margin-bottom: 15px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .dashboard-wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+        }
+      }
+    </style>
+  <% } %>
+</head>
+
+<body>
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h3>Select Options</h3>
+      <a href="/patienthome/bookappointment/<%= data.user._id%>">Book Appointment</a>
+      <!-- <a href="/patienthome/<%= data.user._id %>/bookambulance">Book Ambulance</a> -->
+      <a href="/patienthome/<%= data.user._id%>/edit">Update Profile</a>
+      <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Welcome, <%= data.user.name %>!</h1>
+
+      <!-- Quick Stats -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <h5>Total Appointments</h5>
+            <p><%= data.futureappointment.length + data.pastappointment.length %></p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <h5>Upcoming Appointments</h5>
+            <p><%= data.futureappointment.length %></p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <h5>Booked Ambulances</h5>
+            <p><%= data.ambulanceappointment.length %></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card">
+            <h5>Appointments Overview</h5>
+            <canvas id="appointmentChart"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <h5>Ambulance Bookings</h5>
+            <canvas id="ambulanceChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sections -->
+      <!-- <div class="card mt-4" id="book-appointment">
+        <h5>Book An Appointment</h5>
+        <a href="/patienthome/bookappointment/<%= data.user._id%>" class="btn btn-primary">Book an Appointment</a>
+      </div> -->
+
+      <div class="card mt-4" id="book-ambulance">
+        <h5>Book An Ambulance</h5>
+        <form action="/patienthome/<%= data.user._id %>/bookambulance" method="POST" onSubmit="alert('Your ambulance has been booked');" accept-charset="utf-8">
+          <div class="form-group mb-2">
+            <textarea class="form-control" placeholder="Address" name="address" required></textarea>
+          </div>
+          <div class="form-group mb-2">
+            <input type="tel" class="form-control" placeholder="Phone Number (+91xxxxxxxxxx)" name="phone" pattern="^\d{10}$" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Book Ambulance</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <!-- Charts JS -->
+  <script>
+    const appointmentData = {
+      labels: ['Past', 'Upcoming'],
+      datasets: [{
+        label: 'Appointments',
+        data: ["<%= data.pastappointment.length %>", "<%= data.futureappointment.length %>"],
+        backgroundColor: ['#007bff', '#00c851']
+      }]
+    };
+
+    const appointmentChart = new Chart(document.getElementById('appointmentChart'), {
+      type: 'bar',
+      data: appointmentData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Appointments Overview' }
+        }
+      }
+    });
+
+    const ambulanceData = {
+      labels: ['Booked Ambulances', 'Available Ambulances'],
+      datasets: [{
+        label: 'Ambulances',
+        data: ["<%= data.ambulanceappointment.length %>", 10 - "<%= data.ambulanceappointment.length %>"],
+        backgroundColor: ['#ff3547', '#33b5e5']
+      }]
+    };
+
+    const ambulanceChart = new Chart(document.getElementById('ambulanceChart'), {
+      type: 'doughnut',
+      data: ambulanceData,
+      options: {
+        responsive: true,
+        plugins: {
+          title: { display: true, text: 'Ambulance Bookings' }
+        }
+      }
+    });
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="assets/lib/js/popper.min.js"></script>
+  <script defer src="assets/lib/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

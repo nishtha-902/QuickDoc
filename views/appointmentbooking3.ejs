@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partial/title.ejs'); %>
+
+  <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/vanilla-calendar.css">
+
+  <style>
+    body {
+      background: #f4f7fb;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .booking-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .booking-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 40px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .step-badge {
+      background: #eaf0ff;
+      color: #2a5298;
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .booking-card h3 {
+      color: #2a5298;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .booking-card p {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .calendar-wrapper {
+      margin: 20px 0;
+    }
+
+    .form-control {
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      border: none;
+      border-radius: 25px;
+      padding: 10px 40px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .info-row input {
+      max-width: 180px;
+    }
+  </style>
+</head>
+
+<body onLoad="typeWriter()">
+
+  <!-- Header -->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <!-- Booking Section -->
+  <div class="booking-wrapper">
+    <div class="booking-card">
+
+      <span class="step-badge">Step 3 of 4</span>
+      <h3>Select Date & Time</h3>
+      <p>Choose a suitable appointment slot</p>
+
+      <form
+        action="/patienthome/bookappointment/<%= data.patientid %>/<%= data.disease %>/<%= data.doctorid %>"
+        method="POST">
+
+        <div class="calendar-wrapper">
+          <div id="myCalendar" class="vanilla-calendar"></div>
+        </div>
+
+        <div class="info-row">
+          <input type="text" id="ChosenConvertedDate" name="ChosenConvertedDate"
+            class="form-control" placeholder="Date" readonly required>
+
+          <input type="text" id="ChosenTime" name="ChosenTime"
+            class="form-control" placeholder="Time" readonly required>
+        </div>
+
+        <input type="hidden" id="ChosenDate" name="ChosenDate">
+
+        <div id="DataId"
+          data-sortedpatient='<%= data.sortedpatient %>'
+          data-currentappointment="<%= data.user.CurrentAppointmentDate %>"
+          data-currentdisease="<%= data.user.CurrentDisease %>"
+          data-status="<%= data.user.status %>">
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary">
+            Next →
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('partial/footer.ejs'); %>
+
+  <!-- JS (UNCHANGED) -->
+  <script src="/assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script src="/assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/vanilla-calendar.js"></script>
+  <script>
+  function ConvertChosenTime(str) {
+    var date1 = new Date(str),
+      hour = date1.getHours(),
+      minutes = date1.getMinutes(),
+      end = "AM";
+
+    if (hour >= 12) end = "PM";
+    if (hour > 12) hour -= 12;
+    if (hour === 0) hour = 12;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    return hour + ":" + minutes + " " + end;
+  }
+
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
+
+  let calendar = new VanillaCalendar({
+    selector: "#myCalendar",
+    pastDates: false,
+    onSelect: (data) => {
+
+      let AllPatient = document.getElementById("DataId");
+      let listpatient = JSON.parse(AllPatient.getAttribute('data-sortedpatient'));
+
+      let StartTime = 4.5 * 60 * 60 * 1000; // 4:30 AM
+      let FinalDate;
+      let found = 0;
+
+      let SelectedDate = new Date(data.date);
+      let CleanDate = new Date(SelectedDate.setHours(0, 0, 0, 0));
+
+      for (const property in listpatient) {
+        let BookedDate = new Date(property);
+        if (BookedDate.getTime() === CleanDate.getTime()) {
+          let patientCount = listpatient[property];
+          let extraTime = patientCount * 15 * 60 * 1000;
+          FinalDate = new Date(CleanDate.getTime() + StartTime + extraTime);
+          found = 1;
+        }
+      }
+
+      if (!found) {
+        FinalDate = new Date(CleanDate.getTime() + StartTime);
+      }
+
+      document.getElementById("ChosenDate").value = FinalDate;
+      document.getElementById("ChosenTime").value = ConvertChosenTime(FinalDate);
+      document.getElementById("ChosenConvertedDate").value = convert(FinalDate);
+    }
+  });
+
+  calendar.init();
+</script>
+
+
+  <!-- KEEP ALL YOUR EXISTING SCRIPT BELOW (NO CHANGES) -->
+  <!-- ⬇️ Paste your existing JS logic here as-is ⬇️ -->
+
+</body>
+</html>

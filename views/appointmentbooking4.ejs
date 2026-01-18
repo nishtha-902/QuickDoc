@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partial/title.ejs'); %>
+
+  <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+
+  <style>
+    body {
+      background: #f4f7fb;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .booking-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .booking-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 40px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .step-badge {
+      background: #eaf0ff;
+      color: #2a5298;
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .summary {
+      text-align: left;
+      margin: 20px 0;
+      font-size: 15px;
+      color: #555;
+    }
+
+    .summary p {
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 600;
+      color: #2a5298;
+      margin: 20px 0;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      border: none;
+      border-radius: 25px;
+      padding: 12px 45px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <div class="booking-wrapper">
+    <div class="booking-card">
+
+      <span class="step-badge">Step 4 of 4</span>
+      <h3>Confirm & Pay</h3>
+      <p>Complete payment to confirm your appointment</p>
+
+      <div class="summary">
+        <p><strong>Doctor:</strong> Dr. <%= data.doctor.name %></p>
+        <p><strong>Date:</strong> <%= data.date %></p>
+        <p><strong>Time:</strong> <%= data.time %></p>
+      </div>
+
+      <div class="price">₹500</div>
+
+      <button id="payBtn" class="btn btn-primary">
+        Pay & Confirm →
+      </button>
+
+    </div>
+  </div>
+
+  <%- include('partial/footer.ejs'); %>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+  document.getElementById("payBtn").onclick = async function () {
+
+    this.disabled = true; // Prevent double click
+
+    const res = await fetch("/api/payment/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: 500 }) // amount in INR
+    });
+
+    const order = await res.json();
+
+    const options = {
+      key: "<%= RAZORPAY_KEY_ID %>", // passed from backend
+      amount: order.amount,
+      currency: "INR",
+      name: "QuickDoc",
+      description: "Doctor Consultation",
+      order_id: order.id,
+      handler: async function (response) {
+
+        const verifyRes = await fetch("/api/payment/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(response)
+        });
+
+        const result = await verifyRes.json();
+
+        if (result.success) {
+          window.location.href = "/patienthome/appointment-success";
+        } else {
+          alert("Payment verification failed");
+          document.getElementById("payBtn").disabled = false;
+        }
+      },
+      theme: { color: "#2a5298" }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+    rzp.on('payment.failed', function (response){
+      alert("Payment failed: " + response.error.description);
+      document.getElementById("payBtn").disabled = false;
+    });
+  };
+</script>
+
+
+</body>
+</html>

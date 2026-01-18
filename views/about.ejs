@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Meta Data-->
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV == 'production') { %>
+    <link rel="stylesheet" href="assets/production/css/about.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="assets/lib/css/style.css">
+    <link rel="stylesheet" href="assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+  <% } %>
+
+  <style>
+    .about-page {
+      padding: 80px 0;
+      background: #f8fbff;
+      color: #0b1d3a;
+    }
+
+    .about-page h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #0d6efd;
+    }
+
+    .about-page p {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      color: #495057;
+    }
+
+    .mission-vision {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .mission, .vision {
+      flex: 1;
+      min-width: 300px;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .mission h4, .vision h4 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #0d6efd;
+    }
+
+    .mission p, .vision p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #495057;
+    }
+
+    .about-image {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .about-image img {
+      max-width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body onLoad="typeWriter()">
+  <!--Header-->
+  <%- include('partial/header.ejs', {data: data }); %>
+
+  <!-- About Section -->
+  <section class="about-page">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+          <h2>About QuickDoc</h2>
+          <p>
+            QuickDoc is a modern healthcare platform designed to connect patients, doctors, and emergency services 
+            seamlessly. Our goal is to simplify medical appointments, provide reliable health information, and 
+            ensure quality care anytime, anywhere.
+          </p>
+        </div>
+      </div>
+
+      <!-- Mission & Vision -->
+      <div class="mission-vision">
+        <div class="mission">
+          <h4>Our Mission</h4>
+          <p>
+            To make quality healthcare accessible, convenient, and efficient for everyone. We empower patients with 
+            easy appointment scheduling, timely medical guidance, and emergency services while supporting doctors and 
+            healthcare professionals to deliver care effectively using advanced technology.
+          </p>
+        </div>
+
+        <div class="vision">
+          <h4>Our Vision</h4>
+          <p>
+            To be the leading digital healthcare platform that transforms the way people access medical services. 
+            We envision a world where healthcare is seamless, reliable, and personalized, connecting patients and 
+            professionals to improve health outcomes globally.
+          </p>
+        </div>
+      </div>
+
+      
+
+    </div>
+  </section>
+
+  <!--Footer-->
+  <%- include('partial/footer.ejs'); %>
+
+  <script>
+    var i = 0;
+    var txt = 'WELCOME TO MEDBUDDY';
+    var speed = 60;
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("typeit").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+
+  <!-- JavaScript -->
+  <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="/assets/lib/js/popper.min.js"></script>
+  <script defer src="assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="assets/lib/js/all.min.js"></script>
+  <script defer src="assets/lib/js/select2.full.min.js"></script>
+  <script defer src="assets/js/about.js"></script>
+</body>
+</html>

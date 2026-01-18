@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Meta Data-->
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV == 'production') { %>
+    <link rel="stylesheet" href="assets/production/css/loginRegister.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="assets/lib/css/style.css">
+    <link rel="stylesheet" href="assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #e0f0ff, #f4f9ff);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .contact-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 0;
+      }
+
+      .ambulance-registration-card {
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+      }
+
+      .ambulance-registration-card .icon-top {
+        width: 80px;
+        height: 80px;
+        background: #007bff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 36px;
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .ambulance-registration-card h2 {
+        text-align: center;
+        color: #007bff;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-weight: 700;
+        font-size: 1.8rem;
+      }
+
+      .form-control,
+      select,
+      textarea {
+        border-radius: 10px;
+        border: 1px solid #d1d7e0;
+        padding: 12px 15px;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+      }
+
+      .form-control:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+      }
+
+      select {
+        height: 45px;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      .btn-register {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+        transition: all 0.3s;
+        width: 100%;
+      }
+
+      .btn-register:hover {
+        background-color: #0056b3;
+        color: #fff;
+      }
+
+      @media (max-width: 576px) {
+        .contact-area {
+          padding: 40px 15px;
+        }
+
+        .ambulance-registration-card {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  <% } %>
+</head>
+
+<body>
+  <!--Header-->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <div class="contact-area">
+    <div class="ambulance-registration-card">
+      <!-- Icon -->
+      <div class="icon-top">
+        <i class="fas fa-ambulance"></i>
+      </div>
+
+      <h2>Ambulance Registration</h2>
+
+      <form action="/ambulanceregistration" method="POST" onsubmit="AddUrlList()" accept-charset="utf-8">
+        <div class="form-group mb-3">
+          <input type="text" class="form-control" placeholder="Full Name" name="name" autocomplete="off" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <textarea class="form-control" placeholder="Address" name="address" rows="3" autocomplete="off" required></textarea>
+        </div>
+
+        <div class="form-group mb-3">
+          <input type="tel" class="form-control" placeholder="Phone Number (+91xxxxxxxxxx)" name="phone" pattern="^\d{10}$" minlength="10" autocomplete="off" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <input type="email" class="form-control" placeholder="Email Address" name="username" autocomplete="off" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="password" autocomplete="off" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <input type="text" class="form-control" placeholder="Vehicle Number" name="vehiclenumber" autocomplete="off" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <select id="ambulancetype" name="ambulancetype" class="form-control" required>
+            <option value="" disabled selected>Select Ambulance Type</option>
+            <option value="Paid">Paid</option>
+            <option value="Free">Free</option>
+          </select>
+        </div>
+
+        <input type="hidden" class="hiddenField" name="urllist" id="urllist" />
+
+        <div class="form-group mb-3">
+          <p>Upload Ambulance Pictures</p>
+          <p><a id="upload_widget" class="cloudinary-button btn btn-outline-primary">Upload</a></p>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-register" name="ambulabce_registration">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--Cloudinary Widget Script-->
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var urlList = [];
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: 'hospital-website',
+      uploadPreset: 'wcj4suvr'
+    }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        urlList.push(result.info.secure_url);
+      }
+    });
+
+    function AddUrlList() {
+      document.getElementById("urllist").value = urlList.toString();
+    }
+
+    document.getElementById("upload_widget").addEventListener("click", function () {
+      myWidget.open();
+    }, false);
+  </script>
+
+  <!--Footer-->
+  <%- include('partial/footer.ejs'); %>
+
+  <!-- JavaScript -->
+  <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="/assets/lib/js/popper.min.js"></script>
+  <script defer src="assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="assets/lib/js/all.min.js"></script>
+  <script defer src="assets/lib/js/select2.full.min.js"></script>
+</body>
+
+</html>

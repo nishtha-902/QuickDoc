@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Meta Data-->
+  <%- include('partial/title.ejs'); %>
+
+  <% if (data.NODE_ENV == 'production') { %>
+    <link rel="stylesheet" href="assets/production/css/loginRegister.min.css">
+  <% } else { %>
+    <link rel="stylesheet" href="assets/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/lib/css/responsive.css">
+    <link rel="stylesheet" href="assets/lib/css/select2.min.css">
+    <link rel="stylesheet" href="assets/lib/css/spacing.css">
+    <link rel="stylesheet" href="assets/lib/css/style.css">
+    <link rel="stylesheet" href="assets/lib/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/lib/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #e0f0ff, #f4f9ff);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .contact-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 0;
+      }
+
+      .doctor-registration-card {
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+      }
+
+      .doctor-registration-card .icon-top {
+        width: 80px;
+        height: 80px;
+        background: #007bff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 36px;
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .doctor-registration-card h2 {
+        text-align: center;
+        color: #007bff;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-weight: 700;
+        font-size: 1.8rem;
+      }
+
+      .form-control,
+      select,
+      textarea {
+        border-radius: 10px;
+        border: 1px solid #d1d7e0;
+        padding: 12px 15px;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+      }
+
+      .form-control:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+      }
+
+      select {
+        height: 45px;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      .btn-register {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+        transition: all 0.3s;
+        width: 100%;
+      }
+
+      .btn-register:hover {
+        background-color: #0056b3;
+        color: #fff;
+      }
+
+      @media (max-width: 576px) {
+        .contact-area {
+          padding: 40px 15px;
+        }
+
+        .doctor-registration-card {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  <% } %>
+</head>
+
+<body>
+  <!--Header-->
+  <%- include('partial/header.ejs', { data: data }); %>
+
+  <div class="contact-area">
+    <div class="doctor-registration-card">
+      <!-- Registration Icon -->
+      <div class="icon-top">
+        <i class="fas fa-user-md"></i>
+      </div>
+
+      <h2>Doctor Registration</h2>
+
+      <form action="/doctorregistration" method="POST" accept-charset="utf-8">
+        <div class="form-group mb-3">
+          <input type="text" class="form-control" placeholder="Full Name" name="name" autocomplete="off" required>
+        </div>
+        <div class="form-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="password" autocomplete="off" required>
+        </div>
+        <div class="form-group mb-3">
+          <input type="tel" class="form-control" placeholder="Phone Number (+91xxxxxxxxxx)" name="phone" pattern="^\d{10}$" minlength="10" autocomplete="off" required>
+        </div>
+        <div class="form-group mb-3">
+          <input type="email" class="form-control" placeholder="Email Address" name="username" autocomplete="off" required>
+        </div>
+        <input type="hidden" name="usertype" value="doctor">
+
+        <div class="form-group mb-3">
+          <select id="specialization" name="specialization" class="form-control" required>
+            <option value="" disabled selected>Select Specialization</option>
+            <option value="ENT">ENT Specialist</option>
+            <option value="Skin">Skin Specialist</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Heart">Heart Specialist</option>
+            <option value="Lung">Lung Specialist</option>
+            <option value="Neuro">Neuro Specialist</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <textarea class="form-control" placeholder="Hospital/Clinic Address" name="address" rows="3" autocomplete="off" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-register" name="form_login">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <%- include('partial/footer.ejs'); %>
+
+  <!-- JavaScript -->
+  <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
+  <script defer src="/assets/lib/js/popper.min.js"></script>
+  <script defer src="assets/lib/js/bootstrap.bundle.min.js"></script>
+  <script defer src="assets/lib/js/all.min.js"></script>
+  <script defer src="assets/lib/js/select2.full.min.js"></script>
+</body>
+
+</html>
