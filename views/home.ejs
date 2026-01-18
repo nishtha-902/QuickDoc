@@ -7,7 +7,9 @@
 
     <% if (data.NODE_ENV == 'production') { %>
       <!-- Production Stylesheets -->
-      <link rel="stylesheet" href="assets/production/css/home.min.css">
+      <link rel="stylesheet" href="/assets/production/css/home.min.css">
+      <link rel="stylesheet" href="/assets/lib/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/owl.theme.default.min.css">
 
     <% }else { %>
       <!-- Development Stylesheets -->
@@ -449,6 +451,29 @@
         }
       }
     </script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof $ !== "undefined" && $.fn.owlCarousel) {
+      $("#customers-testimonials").owlCarousel({
+        loop: true,
+        center: true,
+        items: 3,
+        margin: 30,
+        autoplay: true,
+        dots: true,
+        nav: false,
+        responsive: {
+          0: { items: 1 },
+          768: { items: 2 },
+          1170: { items: 3 }
+        }
+      });
+    } else {
+      console.error("Owl Carousel not loaded");
+    }
+  });
+</script>
+
 
     <!-- JavaScript -->
     <script defer src="assets/lib/js/jquery-3.4.1.min.js"></script>
